@@ -1,10 +1,9 @@
-# SST-GRU-Low-Data-Sequence-Learning<h1 align="center">
-  SST-GRU: Contrast-Enhanced Gating in GRUs <br>
-  for Robust Low-Data Sequence Learning
+<h1 align="center">
+ Contrast-Enhanced Gating in GRUs for Robust Low-Data Sequence Learning
 </h1>
 
 <p align="center">
-  ✨ <b>CVPR 2026 Workshop — Camera-Ready</b> ✨
+  ✨ <b>CVPR 2026 Workshop </b> ✨
 </p>
 
 <p align="center">
@@ -275,34 +274,6 @@ SST-GRU/
 │   ├── train.py
 │   ├── evaluate.py
 │   └── utils.py
-│
-├── experiments/
-│   ├── sign_language/
-│   │   ├── train_isl.py
-│   │   └── config_isl.yaml
-│   │
-│   ├── gait_classification/
-│   │   ├── train_gait.py
-│   │   └── config_gait.yaml
-│   │
-│   ├── har/
-│   │   ├── train_wisdm.py
-│   │   ├── train_uci_har.py
-│   │   └── config_har.yaml
-│   │
-│   └── forecasting/
-│       ├── train_gold_forecasting.py
-│       └── config_gold.yaml
-│
-├── notebooks/
-│   ├── SST_GRU_demo.ipynb
-│   └── visualization.ipynb
-│
-├── results/
-│   ├── sign_language_results.csv
-│   ├── gait_results.csv
-│   ├── har_results.csv
-│   └── forecasting_results.csv
 │
 └── paper/
     └── CVPR_2026_SST_Camera_ready_version.pdf
