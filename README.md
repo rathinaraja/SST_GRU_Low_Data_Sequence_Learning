@@ -1,9 +1,10 @@
 <h1 align="center">
- Contrast-Enhanced Gating in GRUs for Robust Low-Data Sequence Learning
+  Contrast-Enhanced Gating in GRUs <br>
+  for Robust Low-Data Sequence Learning
 </h1>
 
 <p align="center">
-  ✨ <b>CVPR 2026 Workshop </b> ✨
+  ✨ <b>CVPR 2026 Workshop</b> ✨
 </p>
 
 <p align="center">
@@ -25,6 +26,10 @@
   Official project page for <b>Contrast-Enhanced Gating in GRUs for Robust Low-Data Sequence Learning</b>.
 </p>
 
+<p align="center">
+  <img src="assets/sst_gru_cell.jpg" width="760">
+</p>
+
 ---
 
 ## 📚 Table of Contents
@@ -35,10 +40,12 @@
 - [🧬 SST-GRU](#-sst-gru)
 - [🧪 Experiments](#-experiments)
 - [📊 Results](#-results)
-- [📁 Planned Repository Structure](#-planned-repository-structure)
+- [🖼️ Figures](#️-figures)
+- [📁 Repository Contents](#-repository-contents)
 - [🚧 Code Release Status](#-code-release-status)
 - [📄 Paper](#-paper)
 - [📚 Citation](#-citation)
+- [⚠️ Notes](#️-notes)
 - [📬 Contact](#-contact)
 
 ---
@@ -49,7 +56,7 @@
 
 Standard GRUs rely on sigmoid and tanh nonlinearities for temporal gating. While effective, these activations can produce weak gate separation and unstable learning when training data are limited or sparse. SST addresses this by squaring the outputs of sigmoid and tanh activations to increase contrast between weak and strong activation regimes.
 
-The key idea is simple:
+The core idea is:
 
 > Make weak activations weaker and strong activations more distinguishable, so GRU gates can perform sharper information filtering.
 
@@ -69,9 +76,15 @@ GRUs are compact, efficient, and widely used for sequence learning. They remain 
 
 However, in low-data or sparse-signal settings, standard sigmoid/tanh gating may be overly smooth. This can reduce the model’s ability to distinguish between informative and non-informative temporal signals.
 
-SST improves gate selectivity by increasing activation contrast.
+To visualize sparse representations in the Indian Sign Language dataset, PCA was applied to three representative classes: **friend**, **phone call**, and **location**.
 
-For example:
+<p align="center">
+  <img src="assets/pca_friend.jpg" width="30%">
+  <img src="assets/pca_phone_call.jpg" width="30%">
+  <img src="assets/pca_location.jpg" width="30%">
+</p>
+
+SST improves gate selectivity by increasing activation contrast.
 
 ```text
 sigmoid output: 0.9 → squared value: 0.81
@@ -102,8 +115,6 @@ SS(x) = SF(x)^2
 
 Squared sigmoid preserves the output range `[0, 1]` while increasing the contrast between low and high activation values.
 
----
-
 ### 2. Squared Tanh
 
 The standard tanh function is:
@@ -120,6 +131,10 @@ ST(x) = -TF(x)^2   if x < 0
 ```
 
 This preserves the sign of the original tanh output while increasing nonlinearity away from the origin.
+
+<p align="center">
+  <img src="assets/ss_st_activation.jpg" width="760">
+</p>
 
 ---
 
@@ -149,6 +164,10 @@ SST is:
 - **useful for sparse temporal patterns**
 - **compatible with existing GRU pipelines**
 
+<p align="center">
+  <img src="assets/sst_gru_cell.jpg" width="760">
+</p>
+
 ---
 
 ## 🧪 Experiments
@@ -166,15 +185,11 @@ The sign language experiment uses the ISL setup from the earlier MOPGRU work. Th
 
 SST was incorporated into the MOPGRU configuration, producing **MOPGRU-SST**.
 
----
-
 ### 2. Gait Classification
 
 The gait classification experiment uses accelerometer sequences collected from 244 subjects during walking tasks.
 
 To simulate sparse sensor data, 20% of the values in 1024-sample input sequences were randomly zeroed out.
-
----
 
 ### 3. Human Activity Recognition
 
@@ -184,8 +199,6 @@ SST-GRU was evaluated on two HAR datasets:
 - **UCI-HAR**
 
 Both datasets were tested under sparsity conditions to simulate real-world sensor-feed challenges.
-
----
 
 ### 4. Gold Price Time-Series Forecasting
 
@@ -210,7 +223,17 @@ The model was trained to predict temporal price trends using financial time-seri
 | MOPGRU | 95% |
 | **MOPGRU-SST** | **100%** |
 
-SST improved separability in hidden and dense representations, as shown through t-SNE analysis in the manuscript.
+SST improved separability in hidden and dense representations, as shown through t-SNE analysis.
+
+<p align="center">
+  <img src="assets/tsne_hidden_mopgru.jpg" width="45%">
+  <img src="assets/tsne_hidden_mopgru_sst.jpg" width="45%">
+</p>
+
+<p align="center">
+  <img src="assets/tsne_dense_mopgru.jpg" width="45%">
+  <img src="assets/tsne_dense_mopgru_sst.jpg" width="45%">
+</p>
 
 ---
 
@@ -222,6 +245,15 @@ SST improved separability in hidden and dense representations, as shown through 
 | **GRU-SST** | **84.3%** | **87.7%** | 77.4% | **82.2%** | **0.92** |
 
 SST improved test accuracy and AUC, indicating stronger discrimination under sparse temporal inputs.
+
+<p align="center">
+  <img src="assets/sparsity_distribution.jpg" width="720">
+</p>
+
+<p align="center">
+  <img src="assets/roc_gru.jpg" width="45%">
+  <img src="assets/roc_gru_sst.jpg" width="45%">
+</p>
 
 ---
 
@@ -249,31 +281,41 @@ SST substantially reduced test-set MSE in the forecasting experiment.
 
 ---
 
-## 📁 Planned Repository Structure
+## 🖼️ Figures
 
-The code will be organized as follows:
+The repository includes the following manuscript figures:
+
+| Figure | File |
+|---|---|
+| SST-GRU cell | `assets/sst_gru_cell.jpg` |
+| Squared sigmoid and squared tanh behavior | `assets/ss_st_activation.jpg` |
+| ISL PCA visualization | `assets/pca_friend.jpg`, `assets/pca_phone_call.jpg`, `assets/pca_location.jpg` |
+| Hidden-layer t-SNE visualization | `assets/tsne_hidden_mopgru.jpg`, `assets/tsne_hidden_mopgru_sst.jpg` |
+| Dense-layer t-SNE visualization | `assets/tsne_dense_mopgru.jpg`, `assets/tsne_dense_mopgru_sst.jpg` |
+| Gait ROC curves | `assets/roc_gru.jpg`, `assets/roc_gru_sst.jpg` |
+
+---
+
+## 📁 Repository Contents
 
 ```text
 SST-GRU/
 ├── README.md
-├── requirements.txt
 ├── LICENSE
 │
 ├── assets/
-│   ├── sst_gru_cell.png
-│   ├── ss_st_activation.png
-│   ├── isl_pca_visualization.png
-│   ├── tsne_hidden_layers.png
-│   ├── tsne_dense_layers.png
-│   └── roc_gait_classification.png
-│
-├── src/
-│   ├── activations.py
-│   ├── sst_gru_cell.py
-│   ├── models.py
-│   ├── train.py
-│   ├── evaluate.py
-│   └── utils.py
+│   ├── sst_gru_cell.jpg
+│   ├── ss_st_activation.jpg
+│   ├── pca_friend.jpg
+│   ├── pca_phone_call.jpg
+│   ├── pca_location.jpg
+│   ├── tsne_hidden_mopgru.jpg
+│   ├── tsne_hidden_mopgru_sst.jpg
+│   ├── tsne_dense_mopgru.jpg
+│   ├── tsne_dense_mopgru_sst.jpg
+│   ├── sparsity_distribution.jpg
+│   ├── roc_gru.jpg
+│   └── roc_gru_sst.jpg
 │
 └── paper/
     └── CVPR_2026_SST_Camera_ready_version.pdf
@@ -289,29 +331,19 @@ Current status:
 
 ```text
 Paper: Available
+Figures: Available
 Code: Coming soon
 Experiments: Coming soon
 Pretrained models: Coming soon
 ```
 
-Once released, this repository will include:
-
-- SST activation functions
-- SST-GRU implementation
-- baseline GRU comparison scripts
-- sign language recognition experiment
-- gait classification experiment
-- HAR experiments
-- gold-price forecasting experiment
-- visualization utilities
-
 ---
 
 ## 📄 Paper
 
-```markdown
+The camera-ready paper is available here:
+
 [Download the CVPR 2026 Camera-Ready Paper](paper/CVPR_2026_SST_Camera_ready_version.pdf)
-```
 
 ---
 
@@ -336,7 +368,7 @@ The official citation will be updated after publication.
 
 This repository is intended for research and educational use.
 
-The current README is based on the camera-ready manuscript. Code and reproducibility scripts will be added after repository cleanup.
+The current README is based on the CVPR 2026 workshop camera-ready manuscript. Code and reproducibility materials will be added after repository cleanup.
 
 Reported results should be interpreted in the context of the experimental setup described in the paper, especially because some datasets are small or controlled low-data benchmarks.
 
