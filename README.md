@@ -2,7 +2,7 @@
   Contrast-Enhanced Gating in GRUs <br>
   for Robust Low-Data Sequence Learning
 </h1>
-   
+     
 <p align="center">
   ✨ <b>CVPR 2026 Workshop</b> ✨
 </p>
